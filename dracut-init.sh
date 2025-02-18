@@ -231,6 +231,9 @@ if [[ $DRINSTALLPARTS == 1 ]] && ! command -v "$DRACUT_INSTALL" > /dev/null 2>&1
     exit 10
 fi
 
+DRACUT_INSTALL_JSON=
+$DRACUT_INSTALL --json-supported &>/dev/null && DRACUT_INSTALL_JSON=1
+
 if [[ $hostonly == "-h" ]]; then
     if ! [[ $DRACUT_KERNEL_MODALIASES ]] || ! [[ -f $DRACUT_KERNEL_MODALIASES ]]; then
         export DRACUT_KERNEL_MODALIASES="${DRACUT_TMPDIR}/modaliases"
