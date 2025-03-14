@@ -266,8 +266,8 @@ inst_simple() {
         _hostonly_install="-H"
         shift
     fi
-    [[ -e ${dstdir}/"${2:-$1}" ]] && return 0 # already there
-    [[ -e $1 ]] || return 1                   # no source
+    [[ -e ${dstdir}/"${2:-$1}" ]] && return 0                       # already there
+    [[ -e $dracutsysrootdir/${1#"$dracutsysrootdir"} ]] || return 1 # no source
     if $DRACUT_INSTALL ${dracutsysrootdir:+-r "$dracutsysrootdir"} ${dstdir:+-D "$dstdir"} ${loginstall:+-L "$loginstall"} ${_hostonly_install:+-H} "$@"; then
         return 0
     else
@@ -526,7 +526,7 @@ build_ld_cache() {
     local dstdir="${dstdir:-"$initdir"}"
 
     for f in "$dracutsysrootdir"/etc/ld.so.conf "$dracutsysrootdir"/etc/ld.so.conf.d/*; do
-        [[ -f $f ]] && inst_simple "${f#"$dracutsysrootdir"}"
+        [[ -f $f ]] && inst_simple "${f}"
     done
     if ! $DRACUT_LDCONFIG -r "$initdir" -f /etc/ld.so.conf; then
         if [[ $EUID == 0 ]]; then
