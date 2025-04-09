@@ -40,22 +40,13 @@ install() {
         tpm2_pcrread tpm2_pcrextend tpm2_createprimary tpm2_createpolicy \
         tpm2_create tpm2_load tpm2_unseal tpm2
 
-    # Install library file(s)
+    # Install library files. libtss2-tcti-* are dlopen'd by libtss2-tctildr.
+    # libcryptsetup-token-systemd-tpm2 is also dlopen'd.
     _arch=${DRACUT_ARCH:-$(uname -m)}
     inst_libdir_file \
-        {"tls/$_arch/",tls/,"$_arch/",}"libtss2-esys.so.*" \
-        {"tls/$_arch/",tls/,"$_arch/",}"libtss2-fapi.so.*" \
-        {"tls/$_arch/",tls/,"$_arch/",}"libtss2-mu.so.*" \
-        {"tls/$_arch/",tls/,"$_arch/",}"libtss2-rc.so.*" \
-        {"tls/$_arch/",tls/,"$_arch/",}"libtss2-sys.so.*" \
         {"tls/$_arch/",tls/,"$_arch/",}"libtss2-tcti-cmd.so.*" \
         {"tls/$_arch/",tls/,"$_arch/",}"libtss2-tcti-device.so.*" \
         {"tls/$_arch/",tls/,"$_arch/",}"libtss2-tcti-mssim.so.*" \
         {"tls/$_arch/",tls/,"$_arch/",}"libtss2-tcti-swtpm.so.*" \
-        {"tls/$_arch/",tls/,"$_arch/",}"libtss2-tctildr.so.*" \
-        {"tls/$_arch/",tls/,"$_arch/",}"libcryptsetup.so.*" \
-        {"tls/$_arch/",tls/,"$_arch/",}"/cryptsetup/libcryptsetup-token-systemd-tpm2.so" \
-        {"tls/$_arch/",tls/,"$_arch/",}"libcurl.so.*" \
-        {"tls/$_arch/",tls/,"$_arch/",}"libjson-c.so.*"
-
+        {"tls/$_arch/",tls/,"$_arch/",}"/cryptsetup/libcryptsetup-token-systemd-tpm2.so"
 }
